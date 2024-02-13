@@ -23,10 +23,11 @@ This C program provides a simple and interactive way to browse through your file
 
 ## Usage
 
-0. **Path setup**: Set the initial path for the program.
+0. **Path setup**: Set the initial path for the program (the directory you put is the root of your filesystem, eg : /home/user).
 
-   ```
-   main.c @ line 37
+   ```bash
+   cd TUI_FileBrowser
+   In main.c @ line 37
    ```
    ```C
    execute(NULL, "dir_name", "dir_absolute_path");
@@ -35,7 +36,6 @@ This C program provides a simple and interactive way to browse through your file
 1. **Compilation**: Compile the program using a C compiler.
 
    ```bash
-   cd navigationC
    gcc main.c -lpanel -lncurses -o main
    ```
 
