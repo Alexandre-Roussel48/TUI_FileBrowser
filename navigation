@@ -14,7 +14,7 @@ sigint_handler() {
 trap 'sigint_handler' SIGINT
 
 # cd to file_path of program
-cd ~/scripts/navigationC
+cd ~/scripts/TUI_FileBrowser
 
 # Program execution and output storage
 output="$(./main | tee /dev/tty)"
