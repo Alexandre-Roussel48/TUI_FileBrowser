@@ -44,7 +44,7 @@ This C program provides a simple and interactive way to browse through your file
    ```bash
    cd ~
    nano .bashrc
-   >> alias nav='. path/to/navigationC/navigation'
+   >> alias nav='. path/to/TUI_FileBrowser/navigation'
    source .bashrc
    ```
 
