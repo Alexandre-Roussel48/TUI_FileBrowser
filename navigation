@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Storage of current dir in case of stopping or opening of a file
+current_dir="$(pwd)"
+
+# Handler of sigint signal
+sigint_handler() {
+    echo -e "\033c"
+    clear
+    cd "$current_dir"
+}
+
+# trap for sigint
+trap 'sigint_handler' SIGINT
+
+# cd to file_path of program
+cd ~/scripts/navigationC
+
+# Program execution and output storage
+output="$(./main | tee /dev/tty)"
+
+# Console clearing to delete program output display
+clear
+
+# parsing of output, if output respects a form like : '1:/path/to/dir' or '2:/path/to/file' then we execute the corresponding command
+if [[ $output =~ .*([12]:/([^[:space:]]+( [^[:space:]]+)*/?)+).* ]]; then
+	# Reattribution of output with parsed string
+	output="${BASH_REMATCH[1]}"
+	if [ "${output:0:1}" = "1" ]; then
+		# ${output:0:1} = '1' => directory path
+		# Then 'cd' to path
+		cd "${output:2}"
+	else
+		# ${output:0:1} = '2' => file path
+		# Then 'open' to path
+		open "${output:2}"
+		# cd to initial dir
+		cd "$current_dir"
+	fi
+else
+	# Full clearing of display
+	echo -e "\033c"
+	# Second to clear to reset prompt line to top
+	clear
+	# cd to initial dir
+	cd "$current_dir"
+fi
