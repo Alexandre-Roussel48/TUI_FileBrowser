@@ -1,6 +1,5 @@
 #include <panel.h>
 #include <string.h>
-#include <signal.h>
 #include "arborescence.c"
 
 int execute(arbre* previous, char name[], char absolute_path[]);
@@ -9,26 +8,15 @@ void win_show(WINDOW *win, int n, char *label, arbre **dirs, arbre **files, int 
 void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color);
 char *substr(char *src, int len);
 
-/*
-Handler for sigint
-*/
-void sigintHandler(int signal) {
-	// Cleanup of windows
-	endwin();
-  exit(0);
-}
-
 int main() {
-	// Setup of sigint signal trap
-	signal(SIGINT, sigintHandler);
-	/* Initialize curses */
+	// Initialize curses
 	initscr();
 	start_color();
 	cbreak();
 	noecho();
 	keypad(stdscr, TRUE);
 
-	/* Initialize all the colors */
+	// Initialize all the colors
 	init_pair(1, COLOR_RED, COLOR_BLACK);
 	init_pair(2, COLOR_BLUE, COLOR_BLACK);
 	init_pair(3, COLOR_CYAN, COLOR_BLACK);
@@ -46,8 +34,7 @@ Parameters :
 Returns :
 	res (int) : 1 for stopping and cd or open current file/dir, 0 for going back one step in the file system
 */
-int execute(arbre* previous, char name[], char absolute_path[])
-{
+int execute(arbre* previous, char name[], char absolute_path[]) {
 	// Variables for windows and panels
 	WINDOW *my_wins[2];
 	PANEL  *my_panels[2];
@@ -88,12 +75,17 @@ int execute(arbre* previous, char name[], char absolute_path[])
 	top = my_panels[0];
 	update_panels();
 	// Calculation of cursor x position
-	int length = strlen(substr(dirs[cursorY-3]->name, COLS/2-4));
-	// Positionning of cursor
-	if (length % 2 == 0) {
-		wmove(my_wins[n_top], cursorY, COLS/4-length/2-1);
+	int length = 0;
+	if (n_dirs > 0) {
+		length = strlen(substr(dirs[cursorY-3]->name, COLS/2-4));
+		// Positionning of cursor
+		if (length % 2 == 0) {
+			wmove(my_wins[n_top], cursorY, COLS/4-length/2-1);
+		} else {
+			wmove(my_wins[n_top], cursorY, COLS/4-length/2-2);
+		}
 	} else {
-		wmove(my_wins[n_top], cursorY, COLS/4-length/2-2);
+		wmove(my_wins[n_top], cursorY, COLS/4);
 	}
 	// Refresh of windows to update the changes
 	wrefresh(my_wins[n_top]);
@@ -111,20 +103,28 @@ int execute(arbre* previous, char name[], char absolute_path[])
 				n_top = n_top == 1 ? 0 : 1;
 				cursorY = 3;
 				if (n_top == 0) {
-					// Positionning of cursor for dirs
-					length = strlen(substr(dirs[cursorY-3]->name, COLS/2-4));
-					if (length % 2 == 0) {
-						wmove(my_wins[n_top], cursorY, COLS/4-length/2-1);
+					if (n_dirs > 0) {
+						// Positionning of cursor for dirs
+						length = strlen(substr(dirs[cursorY-3]->name, COLS/2-4));
+						if (length % 2 == 0) {
+							wmove(my_wins[n_top], cursorY, COLS/4-length/2-1);
+						} else {
+							wmove(my_wins[n_top], cursorY, COLS/4-length/2-2);
+						}
 					} else {
-						wmove(my_wins[n_top], cursorY, COLS/4-length/2-2);
+						wmove(my_wins[n_top], cursorY, COLS/4);
 					}
 				} else {
-					// Positionning of cursor for files
-					length = strlen(substr(files[cursorY-3]->name, COLS/2-4));
-					if (length % 2 == 0) {
-						wmove(my_wins[n_top], cursorY, COLS/4-length/2-1);
+					if (n_files > 0) {
+						// Positionning of cursor for files
+						length = strlen(substr(files[cursorY-3]->name, COLS/2-4));
+						if (length % 2 == 0) {
+							wmove(my_wins[n_top], cursorY, COLS/4-length/2-1);
+						} else {
+							wmove(my_wins[n_top], cursorY, COLS/4-length/2-2);
+						}
 					} else {
-						wmove(my_wins[n_top], cursorY, COLS/4-length/2-2);
+						wmove(my_wins[n_top], cursorY, COLS/4);
 					}
 				}
 				// Refresh of windows to update the changes
@@ -303,17 +303,20 @@ Parameters :
 Returns :
   dest (char*) : substring of src
 */
-char *substr(char *src, int len) { 
-  char *dest=NULL;
-  if (len>0) {
-    /* allocation et mise à zéro */
-    dest = calloc(len+1, 1);
-    /* vérification de la réussite de l'allocation*/
-    if(NULL != dest) {
-        strncat(dest,src,len);
-    }
-  }
-  return dest;
+char *substr(char *src, int len) {
+	if (strlen(src) >= len) {
+	  char *dest=NULL;
+	  if (len>0) {
+	    /* allocation et mise à zéro */
+	    dest = calloc(len+1, 1);
+	    /* vérification de la réussite de l'allocation*/
+	    if(NULL != dest) {
+	        strncat(dest,src,len);
+	    }
+	  }
+	  return dest;
+	}
+	return src;
 }
 
 /*
@@ -328,8 +331,8 @@ Parameters :
 Returns :
   void
 */
-void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color)
-{	int length, x, y;
+void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color) {
+	int length, x, y;
 	float temp;
 
 	if(win == NULL)
