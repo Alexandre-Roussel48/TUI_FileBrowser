@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd ~
-git clone git@github.com:Alexandre-Roussel48/TUI_FileBrowser.git
+git clone https://github.com/Alexandre-Roussel48/TUI_FileBrowser.git
 cd TUI_FileBrowser
 
 clear
