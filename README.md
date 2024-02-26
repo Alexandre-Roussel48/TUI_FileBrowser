@@ -23,7 +23,7 @@ This C program provides a simple and interactive way to browse through your file
 ## Install
 
    ```bash
-   bash -c "$(curl -fsSL https://raw.githubusercontent.com/Alexandre-Roussel48/TUI_FileBrowser/main/install.sh)"
+   source <(curl -fsSL https://raw.githubusercontent.com/Alexandre-Roussel48/TUI_FileBrowser/main/install.sh)
    ```
 
 ## Usage
