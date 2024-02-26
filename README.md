@@ -20,40 +20,21 @@ This C program provides a simple and interactive way to browse through your file
 - **stdio.h**: For displaying.
 - **sys/stat.h**: For performing sys calls for 'ls'.
 
+## Install
+
+   ```bash
+   bash -c "$(curl -fsSL https://raw.githubusercontent.com/Alexandre-Roussel48/TUI_FileBrowser/main/install.sh)"
+   ```
+
 ## Usage
 
-0. **Path setup**: Set the initial path for the program.
-
-   ```
-   main.c @ line 37
-   ```
-   ```C
-   execute(NULL, "dir_name", "dir_absolute_path");
-   ```
-
-1. **Compilation**: Compile the program using a C compiler.
-
-   ```bash
-   cd TUI_FileBrowser
-   gcc main.c -lpanel -lncurses -o main
-   ```
-
-2. **Setup**: Create alias for global use.
-
-   ```bash
-   cd ~
-   nano .bashrc
-   >> alias nav='. path/to/TUI_FileBrowser/navigation'
-   source .bashrc
-   ```
-
-3. **Execution**: Run the command set previously.
+0. **Execution**: Run the command or click on the logo in the applications center.
 
    ```bash
    nav
    ```
 
-4. **Navigation**:
+1. **Navigation**:
 
    - Use `TAB` to switch between the directory and file windows.
    - Press `ENTER` to 'cd' into a directory if the cursor is on a directory or 'open' a file if the cursor is on a file.
@@ -63,7 +44,7 @@ This C program provides a simple and interactive way to browse through your file
 
 ## Example
 
-1. Start the program by executing the command set previously.
+1. Start the program by executing the command set previously or by clicking the logo.
 
    ```bash
    nav
@@ -75,7 +56,7 @@ This C program provides a simple and interactive way to browse through your file
 
 ## Notes
 
-- The program is designed for Linux-type filesystems.
+- The program is designed for Linux-type filesystems that runs with **bashrc**.
 - Ensure that the ncurses library is installed on your system before compiling and running the program.
 
 Feel free to explore, modify, and contribute to enhance the functionality of this filesystem browser. Happy browsing!
