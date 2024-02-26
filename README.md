@@ -19,29 +19,22 @@ This C program provides a simple and interactive way to browse through your file
 - **stdlib.h**: For dynamic allocation of memory.
 - **stdio.h**: For displaying.
 - **sys/stat.h**: For performing sys calls for 'ls'.
-- **signal.h**: For signal handling.
 
 ## Usage
 
-0. **Path setup**: Set the initial path for the program (the directory you put is the root of your filesystem, eg : /home/user) and set the path to script in navigation file.
+0. **Path setup**: Set the initial path for the program.
 
-   ```bash
-   cd TUI_FileBrowser
-   In main.c @ line 17
+   ```
+   main.c @ line 37
    ```
    ```C
    execute(NULL, "dir_name", "dir_absolute_path");
    ```
 
-   
-   ```bash
-   In navigation @ line 37
-   cd path/to/TUI_FileBrowser
-   ```
-
 1. **Compilation**: Compile the program using a C compiler.
 
    ```bash
+   cd TUI_FileBrowser
    gcc main.c -lpanel -lncurses -o main
    ```
 
