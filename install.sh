@@ -23,7 +23,7 @@ source ~/.bashrc
 
 touch ~/.local/share/applications/TUI_FileBrowser.desktop
 
-echo -e "[Desktop Entry]\nName=TUI_FileBrowser\nExec=/home/{{USER}}/TUI_FileBrowser/script/navigation\nType=Application\nIcon=/home/{{USER}}/TUI_FileBrowser/ressources/logo.png\nTerminal=true" >> ~/.local/share/applications/TUI_FileBrowser.desktop
+echo -e "[Desktop Entry]\nName=TUI_FileBrowser\nExec=gnome-terminal -e "bash -c '. /home/{{USER}}/TUI_FileBrowser/script/navigation; exec bash'"\nType=Application\nIcon=/home/{{USER}}/TUI_FileBrowser/ressources/logo.png\nTerminal=true" >> ~/.local/share/applications/TUI_FileBrowser.desktop
 sed -i "s|{{USER}}|$(whoami)|g" ~/.local/share/applications/TUI_FileBrowser.desktop
 
 echo -e "Enjoy your browsing !\n\n"
