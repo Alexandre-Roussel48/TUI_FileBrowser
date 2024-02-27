@@ -27,3 +27,4 @@ echo -e "[Desktop Entry]\nName=TUI_FileBrowser\nExec=gnome-terminal -e "bash -c 
 sed -i "s|{{USER}}|$(whoami)|g" ~/.local/share/applications/TUI_FileBrowser.desktop
 
 echo -e "Enjoy your browsing !\n\n"
+cd ~
