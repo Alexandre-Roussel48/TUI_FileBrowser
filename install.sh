@@ -3,17 +3,25 @@
 cd ~
 if [[ -d TUI_FileBrowser ]]; then
 	cd TUI_FileBrowser
+ 	echo -e "Updating TUI_FileBrowser\n\n"
 	git pull
 else
-	git clone https://github.com/Alexandre-Roussel48/TUI_FileBrowser.git
+	echo -e "Cloning TUI_FileBrowser\n\n"
+ 	git clone https://github.com/Alexandre-Roussel48/TUI_FileBrowser.git
 	cd TUI_FileBrowser
 fi
 
-clear
-
 printf "\e[31m  _______ _    _ _____ ______ _ _      ____                                  \n |__   __| |  | |_   _|  ____(_) |    |  _ \                                 \n    | |  | |  | | | | | |__   _| | ___| |_) |_ __ _____      _____  ___ _ __ \n    | |  | |  | | | | |  __| | | |/ _ \  _ <| '__/ _ \ \ /\ / / __|/ _ \ '__|\n    | |  | |__| |_| |_| |    | | |  __/ |_) | | | (_) \ V  V /\__ \  __/ |   \n    |_|   \____/|_____|_|    |_|_|\___|____/|_|  \___/ \_/\_/ |___/\___|_|   \n\n\e[0m"
 echo "Enter the absolute path of the starting directory <eg:/home/user/work> :"
-read ABSOLUTEPATH
+while true; do
+    read ABSOLUTEPATH
+    if [ -d "$ABSOLUTEPATH" ]; then
+        break
+    else
+        echo "Invalid directory path. Please try again."
+    fi
+done
+
 PATHNAME=$(basename "$ABSOLUTEPATH")
 
 cd code
