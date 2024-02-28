@@ -4,10 +4,10 @@ cd ~
 if [[ -d TUI_FileBrowser ]]; then
 	cd TUI_FileBrowser
  	echo -e "Updating TUI_FileBrowser\n\n"
-	git pull
+	git pull > /dev/null 2>&1
 else
 	echo -e "Cloning TUI_FileBrowser\n\n"
- 	git clone https://github.com/Alexandre-Roussel48/TUI_FileBrowser.git
+ 	git clone https://github.com/Alexandre-Roussel48/TUI_FileBrowser.git > /dev/null 2>&1
 	cd TUI_FileBrowser
 fi
 
