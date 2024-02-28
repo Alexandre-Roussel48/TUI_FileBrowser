@@ -24,7 +24,11 @@ gcc main.c -lpanel -lncurses -o main
 
 cd ~
 nav_alias="alias nav='. ~/TUI_FileBrowser/script/navigation'"
-sed -i "s/^alias nav.*/$nav_alias/" .bashrc
+if grep -q "^alias nav" .bashrc; then
+    sed -i "s|^alias nav.*|$nav_alias|" .bashrc
+else
+    echo "$nav_alias" >> .bashrc
+fi
 source .bashrc
 
 touch .local/share/applications/TUI_FileBrowser.desktop
