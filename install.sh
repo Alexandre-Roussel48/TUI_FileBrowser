@@ -25,9 +25,9 @@ done
 PATHNAME=$(basename "$ABSOLUTEPATH")
 
 cd code
-sed -i "s|{{PATHNAME}}|${PATHNAME}|g" main.c.sample
-sed -i "s|{{ABSOLUTEPATH}}|${ABSOLUTEPATH}|g" main.c.sample
 cp main.c.sample main.c
+sed -i "s|{{PATHNAME}}|${PATHNAME}|g" main.c
+sed -i "s|{{ABSOLUTEPATH}}|${ABSOLUTEPATH}|g" main.c
 gcc main.c -lpanel -lncurses -o main
 
 cd ~
